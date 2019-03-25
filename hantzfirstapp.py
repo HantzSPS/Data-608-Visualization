@@ -1,5 +1,4 @@
-import os
-from flask import Flask
+#import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -10,8 +9,7 @@ import plotly.graph_objs as go
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-server = flask.Flask(__name__)
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=server)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 soql_url = ('https://data.cityofnewyork.us/resource/nwxe-4ae8.json?' +\
         '$select=steward,health,boroname,spc_common,count(tree_id)' +\
@@ -130,14 +128,14 @@ def update_stwd_graph(xaxis_column_name, yaxis_column_name):
     traces = []
     for i in dff.steward.unique():
         df_h=dff[dff['steward']==i]
-        traces.append( go.Scatter(
+        traces.append( go.Bar(
             x=df_h[df_h['boroname']==xaxis_column_name]['percentage'],
             y=df_h[df_h['spc_common']==yaxis_column_name]['percentage'],
             text=df_h['steward'],
             customdata=df_h['health'],
             
             name=i,
-             mode='lines+markers'
+             #mode='lines+markers'
            
             ))
         
@@ -152,18 +150,21 @@ def update_stwd_graph(xaxis_column_name, yaxis_column_name):
             #text=dff[dff['spc_common'] == yaxis_column_name]['health'],
                    # )],
         'data':traces,
-        'layout': {
-            'height': 225,
-            'margin': {'l': 20, 'b': 30, 'r': 10, 't': 10},
-            'annotations': [{
-                'x': 0, 'y': 0.85, 'xanchor': 'left', 'yanchor': 'bottom',
-                'xref': 'paper', 'yref': 'paper', 'showarrow': False,
-                'align': 'left', 'bgcolor': 'rgba(255, 255, 255, 0.5)'
-                #'text': title
-            }]
-            #'yaxis': {'type': 'linear' if axis_type == 'Linear' else 'log'},
-            #'xaxis': {'showgrid': False}
-        }
+        'layout': go.Layout(
+            
+            xaxis={
+                'title': yaxis_column_name
+                
+            },
+            yaxis={
+                'title': xaxis_column_name
+                
+            },
+            
+        )
+            
+        
+    
     }
     
     
