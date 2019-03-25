@@ -89,11 +89,7 @@ def update_graph(xaxis_column_name, yaxis_column_name):
                        
 
     return {
-        #'data': [go.Bar(
-            #x=dff[dff['spc_common'] == yaxis_column_name]['health'],
-           # y=dff[dff['boroname']== xaxis_column_name]['percentage'],
-            #text=dff[dff['spc_common'] == yaxis_column_name]['health'],
-                   # )],
+       
         'data':traces,
         'layout': go.Layout(
             
@@ -144,11 +140,7 @@ def update_stwd_graph(xaxis_column_name, yaxis_column_name):
                        
 
     return {
-        #'data': [go.Bar(
-            #x=dff[dff['spc_common'] == yaxis_column_name]['health'],
-           # y=dff[dff['boroname']== xaxis_column_name]['percentage'],
-            #text=dff[dff['spc_common'] == yaxis_column_name]['health'],
-                   # )],
+        
         'data':traces,
         'layout': go.Layout(
             
