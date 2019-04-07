@@ -1,0 +1,47 @@
+---
+title: "Hantz_Angrand_Vis_Proposal"
+author: "Hantz Angrand"
+date: "April 7, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Suicide Rate Overview between 1985 to 2016
+##Compare socio-economic info with suicide rate by year and by country
+
+#Dataset
+We are using kaggle dataset.  The file can be found here https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
+
+#Load Dataset
+```{r}
+library(tidyverse)
+suicide<-read.csv("https://raw.githubusercontent.com/HantzSPS/Data-608-Visualization/master/master.csv")
+head(suicide)
+```
+The number of observation in our dataset
+
+```{r}
+count(suicide)
+```
+
+The columsn in the dataset
+```{r}
+names(suicide)
+```
+
+
+Summary of the dataset
+```{r}
+summary(suicide)
+```
+
+Removing NA's from the dataset
+```{r}
+suic<-na.omit(suicide)
+summary(suic)
+```
+
+In our project we visualize the rate of suicide per country and per generation and we will be interested to understand the relationship between suicide rate and the gdp in those countries.
