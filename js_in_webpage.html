@@ -1,0 +1,255 @@
+<html>
+
+<!--
+    
+    Note to Students:
+
+        This is a very short introduction to using Javascript in the browser.
+
+        To see this as a webpage, you have to start a *Local Web Server*. There are many ways to do this: since you all have python installed, we will use python.
+
+        - Open terminal
+
+        - 'cd' into the directory where this html file is (js_in_webpage.html)
+
+        - Type the following into the terminal and hit 'enter':
+            python -m SimpleHTTPServer
+
+            your server should read something like: Serving HTTP on 0.0.0.0 port 8000 ...
+
+        - now go to any browser and type in the HTTP address and the filename: something like:
+
+            http://0.0.0.0:8000/js_in_webpage.html
+
+            or
+
+            http://localhost:8000/js_in_webpage.html
+        
+        - Congrats: you now have a local HTTP server running. Now, every time you change this file and save it, when you reload the browser you will see your changes!
+-->
+
+<head>
+<title>Intro to JS in a Browser</title>
+<!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
+
+<style>
+            table {
+                border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+        </style>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+<h1>Intro to JS in a Browser</h1>
+<h2>All of the below is created with Javascript. </h2>
+<!--<script src="d3.min.js?v=3.2.8"></script>-->
+
+
+<script type="text/javascript">
+
+// Here are some examples of things that you might want to do with Javascript
+
+// writing to a document directly
+
+document.write('<p><b>While you are working in Javascript (or any language), it is really important to be able to debug. Some browsers offer very simple ways to see what is happening on a page.</b></p>');
+document.write('<p>Chrome and Firefox in particular offer good Developer Tools and Javascript console access</p><br>');
+document.write('<p>Create a function to reverse any word that you type in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage</p>')
+</script>
+
+<script type="text/javascript">
+
+// Find this bug in the console and fix it!
+
+document.write('<p>These are really helpful for finding bugs!</p><br>');
+</script>
+
+
+<script type="text/javascript">
+
+// Variables and Math:
+
+var num1 = '5';
+var num2 = '5';
+var answer;
+
+answer = +num1 + +num2
+
+document.write(num1 + ' plus ' + num2 + '= ' + answer );
+
+document.write('<p>An example of a random number would be ' + Math.random() + '</p>');
+
+var rightNow = new Date();
+
+document.write('<p>Right now it is ' + rightNow + '<p>');
+
+</script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var tabulate = function (data,columns) {
+  var table = d3.select('body').append('table')
+	var thead = table.append('thead')
+	var tbody = table.append('tbody')
+
+	thead.append('tr')
+	  .selectAll('th')
+	    .data(columns)
+	    .enter()
+	  .append('th')
+	    .text(function (d) { return d })
+
+	var rows = tbody.selectAll('tr')
+	    .data(data)
+	    .enter()
+	  .append('tr')
+
+	var cells = rows.selectAll('td')
+	    .data(function(row) {
+	    	return columns.map(function (column) {
+	    		return { column: column, value: row[column] }
+	      })
+      })
+      .enter()
+    .append('td')
+      .text(function (d) { return d.value })
+
+  return table;
+}
+
+var getPres=function(data,p)
+{
+	console.log(data);
+	console.log(p);
+}
+
+
+d3.csv('https://raw.githubusercontent.com/HantzSPS/CUNY_DATA_608/master/module6/data/presidents.csv',function (data) {
+	var columns = ['Name','Height','Weight']
+	//var pres = ""
+  tabulate(data,columns)
+  getPres(data,p)
+});
+</script>
+
+<script type="text/javascript">
+
+document.write('<br><p>Is a number even or odd, is it divisible by 3?')
+
+// Basic functions
+
+function divis(num,d){
+    var evenOdd = 'odd';
+    if (num%2 == 0) {evenOdd = 'even';};
+
+    var ddiv = false;
+    if (num%d == 0) {ddiv = true;};
+
+    var dtext; 
+    if (ddiv==true){dtext = 'is '} else (dtext = 'is not ');
+
+    var str;
+    str = num + ' is ' + evenOdd +' and ' + dtext + 'divisible by ' + d;
+    
+    return(str);
+};
+
+function calc(){
+    var t = document.getElementById("target");
+    t.innerHTML = divis(document.getElementById('num').value, 3);
+}
+
+
+//Reverse string
+function stringReverse(arr){
+	var str_length = arr.length;
+	var nstring="";
+	for(var i = str_length-1; i>=0;i--){
+		nstring +=arr[i];
+			}
+	return nstring;
+	}
+	
+function display(){
+	var t = document.getElementById("strDisplay");
+	t.innerHTML = stringReverse(document.getElementById('str').value);
+}
+
+
+//20 multiples of a number
+function addTable(n) {
+  var i = 1;
+  var myTableDiv = document.getElementById("myDynamicTable");
+
+  var table = document.createElement('TABLE');
+  table.border = '1';
+
+  var tableBody = document.createElement('TBODY');
+  table.appendChild(tableBody);
+ 
+   while (i<20 ){
+    var tr = document.createElement('TR');
+    tableBody.appendChild(tr);
+
+    for (var j = i; j < i+5; j++) {
+      var td = document.createElement('TD');
+      td.width = '75';
+      td.appendChild(document.createTextNode(n*j));
+      tr.appendChild(td);
+	  
+    }
+	i=i+5;
+  }
+myTableDiv.appendChild(table);
+//return table
+
+}
+
+
+
+
+
+function displayPres(p){
+	var t = document.getElementById("pres");
+	t.innerHTML = getPres(p);
+}
+			
+			
+			
+</script>
+<p>
+<form>    
+	<input id="num" type="number" size="4">
+    <input type="button" value="check" onClick="calc();">
+	<br>
+	<input id="str" type="string">
+    <input type="button" value="Reverse Me" onClick="display();">
+	<br>
+	<input id="tablenum" type="number">
+    <input type="button" value="Print Table" onClick="addTable(document.getElementById('tablenum').value);">
+	<br>
+	<input id="president" type="string">
+    <input type="button" value="President Height" onClick="getPres(data,document.getElementById('president').value);">
+</form>
+</p>
+
+<div id="target"></div>
+<div id="strDisplay"></div>
+<div id="myDynamicTable"></div>
+<div id="pres"></div>
+
+
+
+<script type="text/javascript" src="other_script.js"></script>
+
+<script type="text/javascript"> document.write(myScript());</script>
+
+</body>
+</html>
